@@ -5,7 +5,7 @@ const app = Main.embed(document.getElementById('root'));
 
 const ctx = new AudioContext();
 
-var osc;
+var osc = {};
 
 app.ports.start.subscribe(() => {
   osc = ctx.createOscillator()
@@ -17,6 +17,13 @@ app.ports.stop.subscribe(() => {
   if (!osc.stopped) {
     osc.stop();
     osc.stopped = true;
+  }
+});
+
+app.ports.pitch.subscribe(pitch => {
+  if (osc.frequency && !osc.stopped) {
+    console.log(pitch);
+    osc.frequency.value = pitch;
   }
 });
 

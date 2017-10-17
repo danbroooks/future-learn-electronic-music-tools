@@ -1,13 +1,17 @@
 body {
   background-color: #353b41;
-  font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
-  font-size: 8px;
   margin: 0;
   text-align: center;
 }
 
 button:focus {
   outline: 0;
+}
+
+.app {
+  font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
+  font-size: 8px;
+  padding: 2em;
 }
 
 .unit {
@@ -40,6 +44,7 @@ button:focus {
   border-width: 2px;
   font-size: 1em;
   font-weight: bold;
+  margin: 0 2em 2em;
   height: 6em;
   padding: 0;
   width: 6em;
@@ -103,5 +108,12 @@ button:focus {
   background-color: #040212;
   border-color: #3B3176;
   color: #3B3176;
+}
+
+.pitch-slider {
+  background-color: #040404;
+  border: #222222;
+  height: 30em;
+  width: 50em;
 }
 
