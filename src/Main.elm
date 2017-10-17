@@ -1,55 +1,63 @@
-module Main exposing (..)
+port module Main exposing (..)
 
-import Html exposing (Html, text, div, img)
-import Html.Attributes exposing (src)
-
-
----- MODEL ----
-
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 
 type alias Model =
-    {}
+  { osc : Bool
+  }
 
+initialModel : Model
+initialModel =
+  { osc = False
+  }
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
-
-
-
----- UPDATE ----
-
+    ( initialModel, Cmd.none )
 
 type Msg
-    = NoOp
+  = Start
+  | Stop
 
+port start : () -> Cmd msg
+
+port stop : () -> Cmd msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
-
-
-
----- VIEW ----
-
+  case msg of
+    Start ->
+      ({ model | osc = True }, start ())
+    Stop ->
+      ({ model | osc = False }, stop ())
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ img [ src "/logo.svg" ] []
-        , div [] [ text "Your Elm App is working!" ]
-        ]
+  div [ class "unit unit--red" ]
+    [ redToggleButton model.osc <| [ text "Osc" ] ]
 
+redToggleButton : Bool -> List (Html Msg) -> Html Msg
+redToggleButton on =
+  button [ class <| toggleClass on
+         , onClick <| toggleEvent on
+         ]
 
+toggleClass : Bool -> String
+toggleClass on =
+  if on then "toggle toggle--red toggle--enabled"
+        else "toggle toggle--red"
 
----- PROGRAM ----
-
+toggleEvent : Bool -> Msg
+toggleEvent on =
+  if on then Stop else Start
 
 main : Program Never Model Msg
 main =
-    Html.program
-        { view = view
-        , init = init
-        , update = update
-        , subscriptions = \_ -> Sub.none
-        }
+  Html.program
+    { view = view
+    , init = init
+    , update = update
+    , subscriptions = \_ -> Sub.none
+    }
